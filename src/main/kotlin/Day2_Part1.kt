@@ -6,28 +6,18 @@ class Day2_Part1 {
         @JvmStatic
         fun main(args: Array<String>) {
             println(
-                java.io.File("src/main/kotlin/Day2_Part1_Data.txt").absoluteFile.readLines()
-                //"abcdef\nbababc\nabbcde\nabcccd\naabcdd\nabcdee\nababab".lines()
+                //java.io.File("src/main/kotlin/Day2_Part1_Data.txt").absoluteFile.readLines()
+                "abcdef\nbababc\nabbcde\nabcccd\naabcdd\nabcdee\nababab".lines()
                     .map { it ->
                         val map = HashMap<Char, Int>()
-                        it.forEach {
-                            map[it] = 1 + map.computeIfAbsent(it) { 0 }
+                        it.forEach { character ->
+                            map[character] = 1 + map.computeIfAbsent(character) { 0 }
                         }
                         map
                     }
-                    .map {
-                        HashSet(it.values)
-                    }
-                    .map {
-                        it.remove(1)
-                        it
-                    }.map { it ->
-                        val map = HashMap<Int, Int>()
-                        it.forEach {
-                            map[it] = 1
-                        }
-                        map
-                    }
+                    .map { HashSet(it.values) }
+                    .map { it - 1 }
+                    .map { it.map { count -> count to 1 }.toMap() }
                     .reduce { a, b ->
                         val result = HashMap<Int, Int>(a)
                         b.forEach {
